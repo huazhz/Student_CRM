@@ -7,11 +7,23 @@
 
 **下载：**
 ```shell
-git clone https://github.com/zhu-jie/Student_CRM.git
+$ git clone https://github.com/zhu-jie/Student_CRM.git
 ```
 
 **安装**
 ```shell
-cd Student_CRM/
-pip install -r requirements.txt
+$ cd Student_CRM/
+$ pip install -r requirements.txt
+```
+
+**同步数据库**
+```shell
+$ python manage.py makemigrations
+$ python manage.py migrate
+```
+
+**运行项目**
+
+```shell
+$ python manage.py runserver 0:8080
 ```
