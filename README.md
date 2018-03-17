@@ -28,6 +28,7 @@ $ python manage.py migrate
 $ python manage.py runserver 0:8080
 ```
 
-#截图如下
+**截图如下**
+![登录](https://github.com/zhu-jie/Student_CRM/blob/master/tmp/a1.png)
 
 
