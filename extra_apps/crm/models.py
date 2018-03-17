@@ -73,6 +73,7 @@ class ClassList(models.Model):
 
 
 class Customer(models.Model):
+    '''客户信息'''
     qq = models.CharField(u"QQ号", max_length=64, unique=True)  # QQ是必须值unique=True
     name = models.CharField(u"姓", max_length=32, blank=True, null=True)  # 名字可以为空
     phone = models.BigIntegerField(u'手机号', blank=True, null=True)
@@ -114,6 +115,7 @@ class Customer(models.Model):
 
 
 class ConsultRecord(models.Model):
+    '''咨询记录'''
     customer = models.ForeignKey(Customer, verbose_name=u"所咨询客户")
     note = models.TextField(u"跟进内容...")
     status_choices = ((1, u"近期无报名计划"),
@@ -155,8 +157,7 @@ class CourseRecord(models.Model):
 
 class StudyRecord(models.Model):
     '''记录上课学生'''
-    course_record = models.ForeignKey(CourseRecord,
-                                      verbose_name=u"第几天课程")  # 关联课程，这天的课程可以很多人关联，如果是onetoone则便是一个人关联该课程其他人也没有资格关联了
+    course_record = models.ForeignKey(CourseRecord,verbose_name=u"第几天课程")  # 关联课程，这天的课程可以很多人关联，如果是onetoone则便是一个人关联该课程其他人也没有资格关联了
     student = models.ForeignKey(Customer, verbose_name=u"学员")
     record_choices = (('checked', u"已签到"),
                       ('late', u"迟到"),
