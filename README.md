@@ -27,3 +27,7 @@ $ python manage.py migrate
 ```shell
 $ python manage.py runserver 0:8080
 ```
+
+#截图如下
+
+
