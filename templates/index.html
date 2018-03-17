@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>Adair Crom</h1>
+<!--h1标签的内容无法重写-->
+{% block page-container%}
+<!--此处的内容可以被重写，让子页面继承-->
+Welcome To Adair Crm
+<div>
+    {% if request.user.is_authenticated %}  <!--判断是否已经认证-->
+    <span>{{request.user}}</span> <!--这样能够拿到用户名-->
+    <br>
+    <hr/>
+    <span>{{request.user.userprofile.name}}</span> <!--通过user反差userprofile就可以得到全名了-->
+    {% else %}
+    <span>登录/注册</span>
+    {% endif %}
+</div>
+<a href='/accounts/logout/'>退出当前系统</a>
+{% endblock%}
+</body>
+</html>

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load customer_tags %} {# 加载自定义标签不要放在第一行，因为第一行做了继承 #}
+{% block page-header %}
+客户信息列表
+{% endblock %}
+{% block page-content %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>QQ</th>
+                <th>姓名</th>
+                <th>渠道</th>
+                <th>咨询课程</th>
+                <th>课程类型</th>
+                <th>客户备注</th>
+                <th>状态</th>
+                <th>课程顾问</th>
+                <th>日期</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for customer in  customer_list %}
+            <tr>
+                <td><a href="/crm/customers/{{ customer.id }}/">{{ customer.id }}</a></td>
+                <td>{{ customer.qq }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.source }}</td>
+                <td>{{ customer.course }}</td>
+                <!--这样会显示成英文即数据库里原本存的样子<td>{{ customer.class_type }}</td>-->
+                <td>{{ customer.get_class_type_display }}</td><!--这样写就会正常的显示中文-->
+                <td>{{ customer.customer_note|truncatechars:10 }}</td>  <!--|truncatechars:10表示指定前端应该显示多少个字-->
+                <td class="{{ customer.status }}">{{ customer.get_status_display }}</td>
+{#                <td class="{{ customer.status }}">{{ customer.status|zhu_upper }}</td> 调用自定义的#}
+                <td>{{ customer.consultant }}</td>
+                <td>{{ customer.date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!--添加下一页上一页按钮-->
+    <div class="pagination">
+    <nav>
+      <ul class="pagination">
+      {% if customer_list.has_previous %} <!--#判断是否有上一页,没有就不再显示点击上一页的箭头-->
+        <li class="">
+            <a href="?page={{ customer_list.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+{#      ?page={{ customer_list.previous_page_number }}链接到上一页#}
+      {% endif %}
+      {% for page_num in customer_list.paginator.page_range %} {# for循环一共有多少页面#}
+          {% guess_page customer_list.number page_num %}  {# 通过自定义标签实现显示距离当前页前后3页按钮的效果 #}
+      {% endfor %}
+      {% if customer_list.has_next %} <!--判断是否有下一页，没有就不再显示点击下一页按钮-->
+        <li class="">
+            <a href="?page={{ customer_list.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+{#      ?page={{ customer_list.previous_page_number }}链接到上一页#}
+      {% endif %}
+      </ul>
+    </nav>
+    </div>
+{% endblock %}

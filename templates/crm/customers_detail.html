@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load customer_tags %} {# 加载自定义标签不要放在第一行，因为第一行做了继承 #}
+{% block page-header %}
+客户详情表
+{% endblock %}
+{% block page-content %}
+    <form class="form-horizontal" method="post"> {% csrf_token %}
+        {% for field in customer_forms %}
+        <div class="form-group">
+            {% if field.field.required %}
+                <label class="col-sm-2 control-label">*{{ field.label }}</label>
+            {% else %}
+                <label style="font-weight: normal" class="col-sm-2 control-label">{{ field.label }}</label>
+            {% endif %}
+            <div class="col-sm-10">
+                {{ field }}
+                {% if field.errors %}
+                    <ul>
+                        {% for error in field.errors %}
+                            <li style="color: red">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        <div class="col-sm-12">
+            <input class="btn btn-success pull-right" type="submit" value="保存">
+        </div>
+    </form>
+{% endblock %}
