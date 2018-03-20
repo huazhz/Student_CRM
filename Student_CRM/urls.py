@@ -21,7 +21,7 @@ import xadmin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^xadmin/', xadmin.site.urls),
-    # url(r'^crm/',include('crm.urls')),
-    # url(r'^accounts/login/$',views.acc_login),
-    # url(r'^accounts/logout/$',views.acc_logout),
+    url(r'^crm/',include('crm.urls')),
+    url(r'^accounts/login/$',views.acc_login),
+    url(r'^accounts/logout/$',views.acc_logout),
 ]

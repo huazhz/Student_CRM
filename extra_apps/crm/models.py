@@ -23,7 +23,9 @@ class UserProfile(models.Model):
     class Meta:
         verbose_name = u'用户信息'
         verbose_name_plural = verbose_name
-
+        permissions = (('view_customer_list',u"可以查看客户信息"),          #
+                       ('view_customer_info',u"可以查看客户详细信息"),
+                       ('edit_own_customer_infp', u"可以修改自己的客户信息"))
 
 class School(models.Model):
     name = models.CharField(u"校区名称",max_length=64,unique=True)
