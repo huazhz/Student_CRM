@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage #分页模块
 from crm import models,ModelForms
+from crm.permissions import check_permission
 
 from django.core.paginator import Paginator
 # Create your views here.
@@ -43,10 +44,10 @@ def acc_logout(request):
     logout(request)
     return HttpResponseRedirect('/accounts/login/') #退出后还是跳转到首页
 
-
+@check_permission
 def customers(request):
     customer_list = models.Customer.objects.all()
-    pageinator = Paginator(customer_list, 3)
+    pageinator = Paginator(customer_list, 1)
     page = request.GET.get('page')
     try:
         customer_objs = pageinator.page(page)  # pageinator.page获取具体哪一页，参数page表示前端传过来的参数
@@ -56,6 +57,7 @@ def customers(request):
         customer_objs = pageinator.page(pageinator.num_pages)
     return render(request, 'crm/customers.html', {'customer_list': customer_objs})
 
+@check_permission
 def customers_detail(request,customer_id):
     '''获取客户详情和编辑都通过此视图,customer_id为前端传入，根据该id去获取相关信息'''
     customer_obj = models.Customer.objects.get(id=customer_id)  #返回给前端
